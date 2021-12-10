@@ -89,6 +89,12 @@ FROM binaries-linux-helper AS binaries-linux
 COPY --from=buildctl /usr/bin/buildctl /
 COPY --from=buildkitd /usr/bin/buildkitd /
 
+# new stage for issue https://github.com/moby/buildkit/issues/2400 
+FROM scratch AS binaries-licenses
+ARG LICENSE
+RUN curl -o /usr/share/doc -Ls https://raw.githubusercontent.com/qemu/qemu/$(QEMU_VERSION)/COPYING
+COPY --from=${LICENSE} /usr/share/doc
+
 FROM scratch AS binaries-darwin
 COPY --from=buildctl /usr/bin/buildctl /
 
