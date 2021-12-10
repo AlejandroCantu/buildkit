@@ -484,7 +484,8 @@ func IsCurrentStage(s []Stage, name string) bool {
 // CurrentStage return the last stage in a slice
 func CurrentStage(s []Stage) (*Stage, error) {
 	if len(s) == 0 {
-		return nil, errors.New("no build stage in current context")
+		return nil, errors.New("no build stage in current context\n" 
+		+ "check Dockerfile syntax. see: https://docs.docker.com/engine/reference/builder/")
 	}
 	return &s[len(s)-1], nil
 }
